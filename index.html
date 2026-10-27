@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="my">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffedf4">
+<title>For You 💗 — Love Quest</title>
+<style>
+:root{--pink:#ff6fa7;--deep:#9b315f;--cream:#fff8fb;--ink:#542b40}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,"Noto Sans Myanmar",sans-serif;color:var(--ink);background:radial-gradient(circle at 15% 10%,#ffe1ee 0,transparent 30%),radial-gradient(circle at 90% 90%,#f7dfff 0,transparent 32%),linear-gradient(135deg,#fff8fb,#fff0f6);display:grid;place-items:center;padding:18px;overflow-x:hidden}
+main{width:min(100%,520px);position:relative}
+.card{background:#ffffffdb;border:1px solid #fff;box-shadow:0 18px 55px #b83f7518;border-radius:28px;padding:clamp(22px,6vw,36px);text-align:center;backdrop-filter:blur(8px)}
+.heart{font-size:48px;animation:float 2.5s ease-in-out infinite;display:inline-block}
+h1{font-size:clamp(27px,7vw,38px);line-height:1.35;margin:8px 0;color:var(--deep)}
+p{line-height:1.85}
+.small{font-size:13px;color:#94677c}
+button{font:inherit;border:0;cursor:pointer;border-radius:16px;padding:13px 17px;transition:transform .15s,box-shadow .15s}
+button:active{transform:scale(.98)}
+.primary{background:linear-gradient(135deg,#ff79ac,#e84e8a);color:white;box-shadow:0 8px 20px #ec5a9838;font-weight:700;width:100%;margin-top:12px}
+.option{display:block;width:100%;text-align:left;background:#fff4f8;border:1px solid #ffd5e5;color:var(--ink);margin:10px 0}
+.option:hover{background:#ffe6f0}
+.pill{display:inline-block;border-radius:99px;background:#ffe4ef;color:#a83d6b;padding:6px 12px;font-size:13px}
+.progress{height:7px;border-radius:20px;background:#ffe4ef;overflow:hidden;margin:20px 0}
+.bar{height:100%;width:0;background:linear-gradient(90deg,#ff9dc1,#d94686);transition:width .3s}
+.hidden{display:none!important}
+.bigmessage{font-size:clamp(18px,4.5vw,22px);font-weight:700;color:#a33065}
+input,textarea{width:100%;border:1px solid #f4bfd5;border-radius:12px;padding:12px;font:inherit;background:#fffafd;color:var(--ink);margin-top:6px}
+label{display:block;text-align:left;margin:14px 0;font-size:14px}
+.heartline{letter-spacing:7px;color:#f16b9d;font-size:19px}
+footer{font-size:12px;color:#a77a8e;text-align:center;margin-top:14px}
+.spark{position:fixed;pointer-events:none;opacity:.5;animation:drift 9s linear infinite;font-size:20px}
+@keyframes float{50%{transform:translateY(-8px) rotate(5deg)}}
+@keyframes drift{from{transform:translateY(105vh) rotate(0)}to{transform:translateY(-10vh) rotate(300deg)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<span class="spark" style="left:8%;animation-delay:-2s">♡</span><span class="spark" style="left:88%;animation-delay:-5s">✦</span><span class="spark" style="left:72%;animation-delay:-7s">♡</span>
+<main>
+<section class="card" id="start">
+  <div class="heart">💗</div>
+  <span class="pill">A tiny surprise for you</span>
+  <h1>မင်းအတွက် အံ့ဩစရာလေး</h1>
+  <p>မေးခွန်းလေးတွေ ဖြေရင်း နောက်ဆုံးမှာ ဘာရှိမလဲဆိုတာ ရှာကြည့်နော်။<br>စိတ်ထဲကအတိုင်းပဲ ရွေးပေးပါ 💌</p>
+  <button class="primary" onclick="begin()">စတင်မယ် ♡</button>
+  <p class="small">ဒီဂိမ်းလေးက မင်းအတွက် သီးသန့်ပြင်ဆင်ထားတာပါ။</p>
+</section>
+
+<section class="card hidden" id="quiz">
+  <span class="pill" id="step">QUESTION 1</span>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <div class="heart">💞</div>
+  <h1 id="question">မေးခွန်း</h1>
+  <div id="answers"></div>
+  <p class="small" id="feedback" aria-live="polite"></p>
+</section>
+
+<section class="card hidden" id="result">
+  <div class="heart">💖</div>
+  <span class="pill">SURPRISE UNLOCKED</span>
+  <h1>မင်းက ကိုယ့်အတွက် အထူးဆုံးပါ</h1>
+  <p class="bigmessage">ဒီမေးခွန်းလေးတွေထက် ပိုအရေးကြီးတာက — ကိုယ်တို့အတူရှိခဲ့တဲ့ အချိန်တွေကို ကိုယ်တန်ဖိုးထားတယ်ဆိုတာပါ။</p>
+  <div class="heartline">♡ ✧ ♡ ✧ ♡</div>
+  <p id="loveLetter">မင်းရဲ့နေ့ရက်တိုင်းမှာ ပျော်ရွှင်မှုလေးတွေ ရှိပါစေ။ ကိုယ့်ဘဝထဲမှာ မင်းရှိနေပေးတာကို ကျေးဇူးတင်တယ်။ မင်းအတွက် ဒီ surprise လေးကို ကိုယ်တိုင်ပြင်ဆင်ထားတာပါ။ ချစ်တယ်နော် 💗</p>
+  <button class="primary" onclick="showNote()">နောက်ထပ်စာလေးဖတ်မယ် 💌</button>
+  <p id="extra" class="hidden">အဆုံးထိ ဝင်ကြည့်ပေးလို့ ကျေးဇူးပါ။ ဒီ link လေးက မင်းကို ပြုံးစေဖို့ ဖန်တီးထားတဲ့ အမှတ်တရလေးတစ်ခုပါ။ ♡</p>
+  <button class="option" onclick="restart()">အစကနေ ပြန်ဆော့မယ် ↻</button>
+</section>
+
+<section class="card hidden" id="customize">
+  <div class="heart">📝</div>
+  <h1>ကိုယ်ပိုင်စာသား ပြင်မယ်</h1>
+  <p>ဒီနေရာက စာသားတွေကို ပြင်ပြီး ချစ်သူအတွက် ကိုယ်ပိုင်ပုံစံလုပ်နိုင်ပါတယ်။</p>
+  <label>ခေါ်ချင်တဲ့နာမည်
+    <input id="nickname" placeholder="ဥပမာ — သဲသဲ" maxlength="30">
+  </label>
+  <label>နောက်ဆုံးမှာ ပေါ်စေချင်တဲ့စာ
+    <textarea id="customMessage" rows="4" maxlength="800" placeholder="ကိုယ်တိုင်ရေးထားတဲ့ ချစ်စာလေး..."></textarea>
+  </label>
+  <button class="primary" onclick="saveCustom()">စာသားသိမ်းမယ် ♡</button>
+  <button class="option" onclick="backHome()">ပင်မစာမျက်နှာကို ပြန်သွားမယ်</button>
+  <p class="small">ဒီစာသားတွေကို ဒီ browser ထဲမှာပဲ ပြင်ဆင်တာဖြစ်ပါတယ်။ Link ကို အခြားသူဆီပို့တဲ့အခါ မူရင်းစာသားကို ပြောင်းဖို့ HTML ဖိုင်ကို ပြင်ရပါမယ်။</p>
+</section>
+<footer>Made with ♡ • A little game, a lot of love</footer>
+</main>
+<script>
+const questions = [
+ {q:"ကိုယ်တို့အတွက် အရေးကြီးဆုံးက ဘာလို့ထင်လဲ?",a:["တစ်ယောက်ကိုတစ်ယောက် နားလည်ပေးတာ 💗","လက်ဆောင်တွေ အများကြီးရတာ 🎁","ဘယ်သူနိုင်မလဲဆိုတာ 😆"],f:["အဲဒါလေးက တကယ်အရေးကြီးတယ်နော် 💗","လက်ဆောင်ထက် မင်းရဲ့အပြုံးက ပိုတန်ဖိုးရှိတယ်။","ဟားဟား ဒီဂိမ်းမှာတော့ အနိုင်ရသူက မင်းပါ 😆"]},
+ {q:"ကိုယ်တို့အမှတ်တရတွေကို ဘယ်လိုသိမ်းထားချင်လဲ?",a:["နှလုံးသားထဲမှာ 💞","ဓာတ်ပုံတွေနဲ့ 📸","စာလေးတွေရေးပြီး 💌"],f:["အမှတ်တရကောင်းတွေ အမြဲရှိနေပါစေ။","ဓာတ်ပုံတစ်ပုံစီမှာ ဇာတ်လမ်းလေးတွေ ရှိတယ်နော်။","စာလေးတွေက ပြန်ဖတ်တိုင်း အမှတ်တရဖြစ်စေတယ်။"]},
+ {q:"နောက်ဆုံး Surprise ကို ဖွင့်ကြည့်ဖို့ အဆင်သင့်ပဲလား?",a:["အဆင်သင့်ပဲ! 💖","ဖွင့်ကြည့်ချင်နေပြီ 🥹","နောက်ထပ်မေးခွန်းတစ်ခု! 😂"],f:["ကဲ နောက်ဆုံးအဆင့်ကို သွားကြမယ်။","မင်းအတွက်ပဲ ပြင်ဆင်ထားတာပါ 🥹","ဟားဟား ဒီတစ်ခါတော့ Surprise ကို ဖွင့်ကြည့်ရအောင် 😂"]}
+];
+let index=0;
+function show(id){["start","quiz","result","customize"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!==id))}
+function begin(){index=0;show("quiz");render()}
+function render(){
+ document.getElementById("step").textContent=`QUESTION ${index+1} / ${questions.length}`;
+ document.getElementById("bar").style.width=(index/questions.length*100)+"%";
+ document.getElementById("question").textContent=questions[index].q;
+ document.getElementById("feedback").textContent="";
+ const box=document.getElementById("answers");box.innerHTML="";
+ questions[index].a.forEach((a,i)=>{const b=document.createElement("button");b.className="option";b.textContent=a;b.onclick=()=>answer(i);box.appendChild(b)});
+}
+function answer(i){
+ const q=questions[index];document.getElementById("feedback").textContent=q.f[i];
+ const box=document.getElementById("answers");[...box.children].forEach(b=>b.disabled=true);
+ const next=document.createElement("button");next.className="primary";next.textContent=index===questions.length-1?"Surprise ဖွင့်မယ် 💝":"နောက်တစ်ခု →";next.onclick=()=>{index++;if(index>=questions.length){show("result");document.getElementById("bar").style.width="100%"}else render()};box.appendChild(next);
+}
+function showNote(){document.getElementById("extra").classList.remove("hidden")}
+function restart(){show("start");document.getElementById("extra").classList.add("hidden")}
+function backHome(){show("start")}
+function saveCustom(){
+ const nick=document.getElementById("nickname").value.trim();
+ const msg=document.getElementById("customMessage").value.trim();
+ if(nick)document.querySelector("#result h1").textContent=nick+" အတွက် အထူးဆုံး Surprise 💖";
+ if(msg)document.getElementById("loveLetter").textContent=msg;
+ show("result");
+}
+</script>
+</body>
+</html>
